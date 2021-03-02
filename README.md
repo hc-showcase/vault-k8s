@@ -35,7 +35,7 @@ curl localhost:8080/api
 You should see something like '{"password"=>"43", "username"=>"user0815"}'
 
 
-# Deploy service and endpoints to access an external Vault
+## Deploy service and endpoints to access an external Vault
 The application accesses Vault directly via API, but uses a Kubernetes service to lookup the Vault address.
 
 Deploy the service:
@@ -77,6 +77,7 @@ vault write auth/kubernetes/role/webapp \
         ttl=24h
 ```
 
+### Deploy the application
 Deploy the service account and application:
 ```
 kubectl apply -f service-account-internal-app.yaml 
