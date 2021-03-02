@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-through-service-and-agent
+  labels:
+    app: webapp-through-service-and-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-through-service-and-agent
+  template:
+    metadata:
+      labels:
+        app: webapp-through-service-and-agent
+    spec:
+      serviceAccountName: internal-app
+      containers:
+      - name: app
+        image: mskaesz/webapp-ruby:latest
+        imagePullPolicy: Always
+        args:
+            ['/bin/bash', '-c', 'source /vault/secrets/credentials && rackup --port 8080 --env production']
+        env:
+        - name: VAULT_ADDR
+          value: "http://external-vault:8200"
+

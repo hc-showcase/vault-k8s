@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-through-service
+  labels:
+    app: webapp-through-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-through-service
+  template:
+    metadata:
+      labels:
+        app: webapp-through-service
+    spec:
+      containers:
+      - name: app
+        image: mskaesz/webapp-ruby:latest
+        imagePullPolicy: Always
+        env:
+        - name: VAULT_ADDR
+          value: "http://external-vault:8200"
